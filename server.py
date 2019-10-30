@@ -59,7 +59,39 @@ def register_process():
         return redirect("/register")
 
 
-    
+@app.route("/login", methods=["GET"])
+def login():
+    """redirect to loginin.html"""
+
+    return render_template("loginin.html")
+
+
+@app.route("/login_process", methods=["POST"])
+def login_process():
+    """Check to see if email matches password in user table
+    if yes - redirect to homepage and show flash message
+    if no - redirect to login to try again and show flash message"""
+
+    email = request.form['email']
+    password = request.form['password']
+
+    user = User.query.filter_by(email=email, password=password).first()
+
+    if user == None:
+        flash("Wrong password or Email!")
+        return redirect('/login')
+    else:
+        session['user_id'] = user.user_id
+        flash("Logged in!")
+        return redirect('/')
+
+
+@app.route("/logout")
+def logout():
+    #delete info from session
+    session.pop('user_id')
+
+    return redirect('/')
 
 
 if __name__ == "__main__":

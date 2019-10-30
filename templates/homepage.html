@@ -9,7 +9,18 @@
 <h2>Users</h2>
 <p><a href="/users">View all users</a></p>
 
-<h3>Register New User</h3>
+<h2>Register New User</h2>
 <p><a href="/register">Register Here</a></p>
+{% if 'user_id' in session %}
+    <h2>Log Out</h2><br>
+    <form action="/logout">
+
+    <input type="submit" value="Log Out">
+    </form>
+{% else %}
+    <h2>Login</h2>
+    <p><a href="/login">Login Here</a></p>
+
+{% endif %}
 
 {% endblock %}
