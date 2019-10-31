@@ -90,8 +90,37 @@ def login_process():
 def logout():
     #delete info from session
     session.pop('user_id')
+    #From solution: del session["user_id"]
 
     return redirect('/')
+
+@app.route("/movies")
+def movie_list():
+
+    movies = db.session.query(Movie.title, Movie.movie_id).all()
+    #From solution, gets objects instead of tuples: movies = Movie.query.order_by('title').all()
+
+    #Sort movie titles from tuples into a list, then sort list 
+    # movie_list = []
+    # for movie in movies: 
+    #     movie_name = movie[0]
+    #     movie_list.append(movie_name)
+    # movie_list.sort()
+
+    return render_template("movie_list.html", movies=movies)
+
+@app.route("/movie_details")
+def movie_details():
+    """Show all ratings for a movie, give option for adding a rating"""
+    movie_name = request.args.get('movie')
+
+    print("IT IS HERE!!!!!")
+    print(movie_name)
+    print("IT IS HERE!!!!!")
+    
+    return render_template("movie_details.html")
+
+
 
 
 if __name__ == "__main__":
