@@ -6,7 +6,7 @@
   <ul>
     {% for movie in movies %}
       <li>
-        <a href="/movie_details?id={{ movie[1] }}">{{ movie[0] }}</a>
+        <a href="/movie_details/{{ movie.movie_id }}">{{ movie.title }}</a>
       </li>
     {% endfor %}
   </ul>

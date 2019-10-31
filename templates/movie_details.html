@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h2>Movie Details</h2>
-  <!-- needs detail code -->
+  <h2>Movie Details</h2><br>
+  <h2>Movie Ratings List</h2>
+  <ul>
+    {% for rating in movie_rating %}
+      <li>
+        {{ rating.score }}
+      </li>
+    {% endfor %}
+  </ul>
 
 
 {% endblock %}

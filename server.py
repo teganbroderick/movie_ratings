@@ -97,28 +97,27 @@ def logout():
 @app.route("/movies")
 def movie_list():
 
-    movies = db.session.query(Movie.title, Movie.movie_id).all()
-    #From solution, gets objects instead of tuples: movies = Movie.query.order_by('title').all()
-
-    #Sort movie titles from tuples into a list, then sort list 
-    # movie_list = []
-    # for movie in movies: 
-    #     movie_name = movie[0]
-    #     movie_list.append(movie_name)
-    # movie_list.sort()
+    # gets list of tuples => movies = db.session.query(Movie.title, Movie.movie_id).all()
+    movies = Movie.query.order_by('title').all()
 
     return render_template("movie_list.html", movies=movies)
 
-@app.route("/movie_details")
-def movie_details():
+@app.route("/movie_details/<int:movie_id>")
+def movie_details(movie_id):
     """Show all ratings for a movie, give option for adding a rating"""
-    movie_name = request.args.get('movie')
 
-    print("IT IS HERE!!!!!")
-    print(movie_name)
-    print("IT IS HERE!!!!!")
+    #route info < >: got movie_id string from html, converted string to integer
+
+    movie = Movie.query.get(movie_id) #create movie object using movie_id
+    movie_rating = movie.ratings #Backref relationship exists, so we can get ratings using the movie object
     
-    return render_template("movie_details.html")
+    for rating in movie_rating: #loop over list of ratings
+        print(rating.score) #print score using the relationship with ratings
+
+    #suggested next step: also get user email
+    
+    return render_template("movie_details.html", movie_rating=movie_rating)
+
 
 
 
